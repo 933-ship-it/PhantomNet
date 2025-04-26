@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PhantomNet</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+      color: #00ff00;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+    .overlay {
+      position: relative;
+      z-index: 1;
+      padding: 20px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    header {
+      width: 100%;
+      padding: 20px 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      margin-bottom: 2em;
+      text-align: center;
+    }
+    header h1 {
+      color: #00ff00;
+      font-size: 2.5em;
+      margin: 0 0 0.5em 0;
+    }
+    header p {
+      color: #eee;
+      font-size: 1.2em;
+      margin: 0;
+    }
+    .product-info {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 800px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      margin-bottom: 2em;
+    }
+    .product-info h2 {
+      font-size: 2em;
+      color: #00ff00;
+      margin-bottom: 0.5em;
+    }
+    .product-info p {
+      font-size: 1.2em;
+      color: #eee;
+      margin-bottom: 1.5em;
+      line-height: 1.5;
+    }
+    .download-button {
+      background-color: #00ff00;
+      color: black;
+      padding: 15px 30px;
+      font-size: 1.5em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      margin-top: 20px;
+      text-decoration: none;
+      box-shadow: 0 4px 8px rgba(0, 255, 0, 0.3);
+    }
+    .download-button:hover {
+      background-color: #00cc00;
+      box-shadow: 0 6px 12px rgba(0, 255, 0, 0.5);
+    }
+    footer {
+      width: 100%;
+      padding: 20px 40px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #eee;
+      margin-top: auto;
+      text-align: left;
+    }
+    @media screen and (max-width: 800px) {
+      .product-info {
+        max-width: 95%;
+      }
+      header h1 {
+        font-size: 2em;
+      }
+      header p {
+        font-size: 1em;
+      }
+      .download-button {
+        font-size: 1.2em;
+        padding: 12px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+  <div class="overlay">
+    <header>
+      <h1>PhantomNet</h1>
+      <p>Unlock the power of PhantomNet.</p>
+    </header>
+
+    <main class="product-info">
+      <h2>About PhantomNet</h2>
+      <p>
+        PhantomNet is a client-side application designed to collect Wi-Fi information such as SSID, password, and IP addresses.Then send that info back to the server side
+      </p>
+      <h2>Download</h2>
+      <p>Click below to pay and get instant access.</p>
+
+      <!-- Stripe Payment Link -->
+      <a
+        class="download-button"
+        href="https://buy.stripe.com/test_8wMcQr2oNean8YEfYY"
+        target="_blank"
+        rel="noopener"
+      >
+         Download PhantomNet 
+      </a>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 PhantomNet. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const columns = Math.floor(canvas.width / 10);
+    const drops = Array(columns).fill(0);
+
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#00ff00";
+      ctx.font = "14px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = Math.random() > 0.5 ? "0" : "1";
+        const x = i * 10;
+        const y = drops[i] * 14;
+        ctx.fillText(text, x, y);
+
+        if (y > canvas.height && Math.random() > 0.98) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrix, 50);
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
